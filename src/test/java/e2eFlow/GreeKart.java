@@ -10,6 +10,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 public class GreeKart {
@@ -17,8 +19,11 @@ public class GreeKart {
 	public static void main(String[] args) throws InterruptedException {
 		System.setProperty("webdriver.chrome.driver", "chromedriver.exe"); // sets Chromediver.exe property in system
 		WebDriver d = new ChromeDriver(); // object of chromeDriver class referring to WebDriver Interface
-		d.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-		//d.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+		//d.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		d.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+		WebDriverWait wait = new WebDriverWait(d, Duration.ofSeconds(30)); 
+		// this will also go to next step if the element is located with in less than 10 sec
+		// polling time - it is the frequency with which selenium monitors an element - 500ms- half secl̥
 		d.manage().window().maximize();
 		// d.navigate().to("https://rahulshettyacademy.com/AutomationPractice/");
 		d.get("https://rahulshettyacademy.com/seleniumPractise/#/");
@@ -31,11 +36,19 @@ public class GreeKart {
 
 		GreeKart.verifyItemsInCart(inputList, d);
 
+		wait.until(ExpectedConditions
+				.elementToBeClickable(d.findElement(By.xpath("//button[text()='PROCEED TO CHECKOUT']"))));
 		d.findElement(By.xpath("//button[text()='PROCEED TO CHECKOUT']")).click();
 
 		d.findElement(By.className("promoCode")).sendKeys("rahulshettyacademy");
 		d.findElement(By.className("promoBtn")).click();
+
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("promoInfo")));
+		
+		
+		
 		String promoMessage = d.findElement(By.className("promoInfo")).getText();
+
 		Assert.assertEquals(promoMessage, "Code applied ..!");
 
 		d.close();
