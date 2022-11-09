@@ -19,7 +19,7 @@ public class FramesDemo {
 		WebDriverWait wait = new WebDriverWait(d, Duration.ofSeconds(30));
 		d.manage().window().maximize();
 		d.get("https://jqueryui.com/droppable/");
-		// by id
+		// by index
 		// d.switchTo().frame(0);
 
 		// by name or id
