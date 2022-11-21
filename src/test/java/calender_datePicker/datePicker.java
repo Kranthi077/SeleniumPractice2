@@ -30,7 +30,7 @@ public class datePicker {
 		String currentMonth = d.findElement(By.className("monthTitle")).getText();
 		// !false = true
 		// !true= false
-		while (!currentMonth.equalsIgnoreCase("Jun 2023")) {
+		while (!currentMonth.equalsIgnoreCase("July 2023")) {
 			d.findElement(By.className("next")).click();
 			currentMonth = d.findElement(By.className("monthTitle")).getText();
 		}
@@ -38,7 +38,7 @@ public class datePicker {
 		List<WebElement> days = d.findElements(By.className("day"));
 
 		for (int i = 0; i < days.size(); i++) {
-			if (days.get(i).getText().equals("23")) {
+			if (days.get(i).getText().equals("25")) {
 				days.get(i).click();
 				break;
 			}
